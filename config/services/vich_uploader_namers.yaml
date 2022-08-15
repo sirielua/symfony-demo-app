@@ -1,0 +1,17 @@
+services:
+    Vich\UploaderBundle\Naming\CurrentDateTimeHelper: ~
+    
+    App\Infrastructure\VichUploaderBundle\CurrentDateTimeDirectoryNamer:
+        public: true
+        arguments:
+            $dateTimeHelper: '@Vich\UploaderBundle\Naming\CurrentDateTimeHelper'
+            $propertyAccessor: '@Symfony\Component\PropertyAccess\PropertyAccessorInterface'
+    
+    App\Infrastructure\VichUploaderBundle\PropertyDirectoryNamer:
+        public: true
+        arguments:
+            $propertyAccessor: '@Symfony\Component\PropertyAccess\PropertyAccessorInterface'
+            $transliterator: '@Vich\UploaderBundle\Util\Transliterator'
+            
+    App\Infrastructure\VichUploaderBundle\SubdirDirectoryNamer:
+        public: true

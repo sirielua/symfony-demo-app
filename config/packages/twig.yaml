@@ -1,0 +1,18 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+
+    paths:
+        'src/Admin/templates': 'admin'
+        
+    globals:
+        app_name: '%app_name%'
+        app_author: '%app_author%'
+        app_title: '%app_title%'
+        app_description: '%app_description%'
+        app_keywords: '%app_keywords%'
+        
+    form_themes: ['bootstrap_5_horizontal_layout.html.twig','_themes/customizations.html.twig']
+    
+when@test:
+    twig:
+        strict_variables: true

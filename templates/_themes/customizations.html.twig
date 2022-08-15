@@ -1,0 +1,5 @@
+{# Renders file input widget without labels and wrappers #}
+{%- block collection_file_widget -%}
+    {{- form_widget(form.file) -}}
+    {{- form_errors(form.file) -}}
+{%- endblock collection_file_widget %}

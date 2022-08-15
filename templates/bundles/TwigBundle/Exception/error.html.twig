@@ -1,0 +1,13 @@
+{% extends '_layouts/error.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">Error {{ status_code }}</div>
+
+        <div class="card-body">
+            {{ status_text }}
+            <br />
+            Please contact server administration or return to the <a href="{{ path('app_index') }}">main page</a>.
+        </div>
+    </div>
+{% endblock %}

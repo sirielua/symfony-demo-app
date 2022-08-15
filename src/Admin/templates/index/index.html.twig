@@ -1,0 +1,9 @@
+{% extends '@admin/_layouts/base.html.twig' %}
+
+{% block title %}Index Title{% endblock %}
+{% block content_title %}Index Content Title{% endblock %}
+{% block content_sub_title %}Index Content Sub Title{% endblock %}
+
+{% block content %}
+    <h1>Hello {{ app.user ? app.user.userIdentifier : 'guest' }}!</h1>
+{% endblock %}

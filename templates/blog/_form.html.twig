@@ -1,0 +1,31 @@
+{{ form_start(form) }}
+    {{ form_row(form.title) }}
+    {{ form_row(form.isPublished) }}
+    {{ form_row(form.image) }}
+    {{ form_row(form.content, {
+        label: 'Post content'
+    }) }}
+    
+    <div class="mb-3 row">
+        {{ form_label(form.images) }}
+        <div class="col-sm-10">
+            <button type="button" class="btn btn-primary add-another-collection-widget mb-3" data-list-selector="#images-fields-list">Add image</button>
+            
+            <ul id="images-fields-list" class="form-collection-widget list-unstyled"
+                data-prototype="{{ form_widget(form.images.vars.prototype)|e }}"
+                data-widget-delete-button="{{ '<button type="button" class="btn-close remove-button" aria-label="Remove"></button>'|e }}"
+                data-widget-tags="{{ '<li class="item"></li>'|e }}"
+                data-widget-counter="{{ form.images|length }}">
+                {% for fileField in form.images %}
+                    <li class="item">
+                        {{ form_errors(fileField) }}
+                        {{ form_widget(fileField) }}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% do form.images.setRendered %}
+    
+    <button type="submit" class="btn btn-primary">{{ actionLabel ? actionLabel : 'Save' }}</button>
+{{ form_end(form) }}

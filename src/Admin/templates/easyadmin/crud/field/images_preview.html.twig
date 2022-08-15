@@ -1,0 +1,18 @@
+{% if field.value|length > 0 %}
+
+    {% for image in field.value %}
+        {% set html_id = 'ea-lightbox-' ~ field.uniqueId ~ '-' ~ loop.index %}
+        {% set imageSrc = vich_uploader_asset(image, 'file') %}
+        
+        <a href="#" class="ea-lightbox-thumbnail" data-ea-lightbox-content-selector="#{{ html_id }}">
+            <img src="{{ imageSrc }}" class="img-fluid">
+        </a>
+
+        <div id="{{ html_id }}" class="ea-lightbox">
+            <img src="{{ imageSrc }}">
+        </div>
+    {% endfor %}
+
+{% else %}
+    <span class="badge badge-secondary">Null</span>
+{% endif %}

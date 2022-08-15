@@ -1,0 +1,35 @@
+{% extends '_layouts/base.html.twig' %}
+
+{% block content %}
+    {% embed "_layouts/fragments/_wide-col.html.twig" %}
+        
+        {% block content %}
+        <div class="card">
+            <div class="card-header container-fluid">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 class="w-75 p-3">{{post.title}}</h3>
+                    </div>
+                    <div class="col-md-2 float-right">
+                        {% if post.author.id == app.user.id %}
+                            <a class="btn btn-primary" href="{{ path('app_blog_update', {slug: post.slug}) }}">Edit</a>
+                            <a class="btn btn-danger spoofed" href="{{ path('app_blog_delete', {slug: post.slug}) }}" data-confirm-msg="Are you sure?" data-method="post" data-csrf="{{ csrf_token('delete-post') }}">Delete</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+                    
+            {% if post.imageName %}
+                <img src="{{ vich_uploader_asset(post, 'image') }}" class="card-img-top" alt="{{ post.title }}">
+            {% endif %}
+                
+            <div class="card-body">
+                {{ post.content|raw }}
+            </div>
+
+            <div class="card-footer">{{ post.createdAt | date('Y-m-d') }}, {{ post.createdAt | date('H:i:s') }}, by {{ post.author.displayName }}</div>
+        </div>
+        {% endblock %}
+            
+    {% endembed %}
+{% endblock %}

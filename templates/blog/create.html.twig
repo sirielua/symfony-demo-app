@@ -1,0 +1,17 @@
+{% extends '_layouts/base.html.twig' %}
+
+{% block content %}
+    {% embed "_layouts/fragments/_wide-col.html.twig" %}
+        
+        {% block content %}
+        <div class="card">
+            <div class="card-header">Create new post</div>
+
+            <div class="card-body">
+                {{ include('blog/_form.html.twig', {form: form, actionLabel: 'Create new post'}) }}
+            </div>
+        </div>
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}

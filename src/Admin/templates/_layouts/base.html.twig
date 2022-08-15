@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="Content-Language" content="{{ app.request.locale }}" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        
+        <meta name="csrf-token" content="{{ csrf_token('meta') }}" />
+
+        <title>{{ app_name }} - {% block title %}{{ app_title }}{% endblock %}</title>
+        <meta name="description" content="{% block description %}{{ app_description }}{% endblock %}" />
+        <meta name="keywords" content="{% block keywords %}{{ app_keywords }}{% endblock %}" />
+        <meta name="author" content="{{ app_author }}" />
+        
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        
+        {#
+        =========================================================
+        * ArchitectUI HTML Theme Dashboard - v1.0.0
+        =========================================================
+        * Product Page: https://dashboardpack.com
+        * Copyright 2019 DashboardPack (https://dashboardpack.com)
+        * Licensed under MIT (https://github.com/DashboardPack/architectui-html-theme-free/blob/master/LICENSE)
+        =========================================================
+        * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+        #}
+        
+        <link rel="stylesheet" href="{{ asset('build/architect-ui/main.css') }}">
+        
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('admin') }}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+
+            {# App Header #}
+            {{ include('@admin/_layouts/base/_header.html.twig') }}
+            <div class="app-main">
+
+                {# App Sidebar #}
+                {{ include('@admin/_layouts/base/_sidebar.html.twig') }}
+                
+                <div class="app-main__outer">
+                    <div class="app-main__inner">
+
+                        {# Page Header #}
+                        {% block content_header %}
+                            {{ include('@admin/_layouts/base/_content_header.html.twig', {
+                                content_title: block('content_title') is defined ? block('content_title')|raw : block('title')|raw,
+                                content_sub_title: block('content_sub_title') is defined ? block('content_sub_title')|raw : '',
+                            }) }}
+                        {% endblock %}
+
+                        {# Page Content #}
+                        {% block content %}{% endblock %}
+
+                    </div>
+
+                    {# Page Footer Start #}
+                    {{ include('@admin/_layouts/base/_footer.html.twig') }}
+                </div>
+                {# <script src="http://maps.google.com/maps/api/js?sensor=false"></script> #}
+            </div>
+        </div>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('admin') }}
+            <script src="{{ asset('build/architect-ui/main.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,12 @@
+{% extends '_layouts/error.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header">Page not found</div>
+
+        <div class="card-body">
+            The requested page couldn't be located. Checkout for any URL
+            misspelling or return to the <a href="{{ path('app_index') }}">main page</a>.
+        </div>
+    </div>
+{% endblock %}

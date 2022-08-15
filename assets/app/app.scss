@@ -1,0 +1,38 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+// the ~ allows you to reference things in node_modules
+@import '~bootstrap/scss/bootstrap';
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+
+
+.form-collection-widget {
+    .item {
+        display: flex;
+        align-items: baseline;
+        flex-wrap: wrap;
+        margin-bottom: 0.5rem;
+        
+        .vich-image {
+            margin-right: 0.5rem;
+            order: 0;
+        }
+        
+        .remove-button {
+            order: 1;
+        }
+        
+        .invalid-feedback {
+            order: 2;
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{% extends '_layouts/base.html.twig' %}
+
+{% block content %}
+    {% embed "_layouts/fragments/_wide-col.html.twig" %}
+        
+        {% block content %}
+        <div class="card">
+            <div class="card-header">Hello World!</div>
+
+            <div class="card-body">
+                Welcome to main page!
+            </div>
+        </div>
+        {% endblock %}
+            
+    {% endembed %}
+{% endblock %}
