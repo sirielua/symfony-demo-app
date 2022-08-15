@@ -1,0 +1,114 @@
+security:
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers:
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
+        
+        App\Entity\User:
+            algorithm: auto
+        
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    providers:
+        users_in_memory: { memory: null }
+        
+        admin_users_provider: 
+            memory:
+                users:
+                    admin: { password: '$2y$13$1mqumZ8igrhZaWkkaz2JGeBAirxnrxqdzgOdytri3JfscgJRU6G1O', roles: [ROLE_SUPER_ADMIN] }
+                    
+        app_users_provider:
+            entity:
+                # the class of the entity that represents users
+                class: 'App\Entity\User'
+                
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+            
+        admin:
+            pattern: ^/(admin|ea)
+            
+            lazy: false
+            provider: admin_users_provider
+            
+            form_login:
+                enable_csrf: true
+                login_path: admin_login
+                check_path: admin_login
+            
+            logout:
+                csrf_parameter: _csrf_token
+                csrf_token_generator: security.csrf.token_manager
+        
+                path: admin_logout
+                # where to redirect after logout
+                target: admin_login
+                
+            remember_me:
+                # required
+                secret: '%kernel.secret%'
+                
+                # 1 week in seconds
+                lifetime: 604800
+                
+            login_throttling:
+                max_attempts: 300
+                interval: '5 minutes'
+        main:
+            # The lazy anonymous mode prevents the session from being started if there is no need for authorization (i.e. explicit check for a user privilege).
+            lazy: true
+            provider: app_users_provider
+
+            form_login:
+                enable_csrf: true
+                login_path: app_login
+                check_path: app_login
+            
+            logout:
+                csrf_parameter: _csrf_token
+                csrf_token_generator: security.csrf.token_manager
+        
+                path: app_logout
+                # where to redirect after logout
+                target: app_login
+                
+            remember_me:
+                # required
+                secret: '%kernel.secret%'
+                
+                # 1 week in seconds
+                lifetime: 604800
+                
+            login_throttling:
+                max_attempts: 3
+                interval: '5 minutes'
+                
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/admin/login, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: [ROLE_ADMIN] }
+        - { path: ^/ea, roles: [ROLE_ADMIN] }
+        - { path: ^/profile, roles: ROLE_USER }
+
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        
+when@test:
+    security:
+        password_hashers:
+            # By default, password hashers are resource intensive and take time. This is
+            # important to generate secure password hashes. In tests however, secure hashes
+            # are not important, waste resources and increase test times. The following
+            # reduces the work factor to the lowest possible values.
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon

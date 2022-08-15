@@ -1,0 +1,42 @@
+{% extends '_layouts/base.html.twig' %}
+
+{% block content %}
+    {% embed "_layouts/fragments/_wide-col.html.twig" %}
+        
+        {% block content %}
+        <div class="card">
+            <div class="card-header">Total: {{ pagination.getTotalItemCount }}</div>
+            <div class="card-header">Search: {{ knp_pagination_filter(pagination, {}, { button: 'Search' }) }}</div>
+
+            <div class="card-body">
+                <table>
+                    <tr>
+                        {# sorting of properties based on query components #}
+                        <th{% if pagination.isSorted('p.title') %} class="sorted"{% endif %}>
+                            {{ knp_pagination_sortable(pagination, 'Title', 'p.title') }}
+                        </th>
+
+                        <th{% if pagination.isSorted(['a.displayName']) %} class="sorted"{% endif %}>
+                            {{ knp_pagination_sortable(pagination, 'Author', ['a.displayName']) }}
+                        </th>
+
+                        <th{% if pagination.isSorted(['p.createdAt']) %} class="sorted"{% endif %}>
+                            {{ knp_pagination_sortable(pagination, 'Release', ['p.createdAt']) }}
+                        </th>
+                    </tr>
+                    {% for post in pagination %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td><a href="{{ path('app_blog_view', {slug: post.slug}) }}">{{ post.title }}</a></td>
+                            <td>{{ post.author.displayName }}</td>
+                            <td>{{ post.createdAt | date('Y-m-d') }}, {{ post.createdAt | date('H:i:s') }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="card-footer">{{ knp_pagination_render(pagination) }}</div>
+        </div>
+        {% endblock %}
+
+    {% endembed %}
+{% endblock %}
